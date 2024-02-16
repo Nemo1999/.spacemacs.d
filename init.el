@@ -48,12 +48,14 @@ This function should only modify configuration layer settings."
      markdown
      pdf
      multiple-cursors
-     org
+     (org :variables
+          org-enable-roam-support t
+          org-roam-ui-mode t)
      (shell :variables
              shell-default-height 30
              shell-default-position 'bottom)
-     ;; spell-checking
-     ;; syntax-checking
+     spell-checking
+     syntax-checking
      version-control
      treemacs)
 
@@ -574,6 +576,11 @@ before packages are loaded."
   (desktop-save-mode 1)
   (savehist-mode 1)
   (add-to-list 'savehist-additional-variables 'kill-ring)
+  ;;(setq browse-url-generic-program "/mnt/c/Program\ Files\ \(x86\)/Microsoft/Edge/Application/msedge.exe")
+  ;; create symbolic link to prevent space escape issue
+  (setq browse-url-generic-program "~/edge-browser")
+  (setq browse-url-browser-function #'browse-url-generic)
+
 )
 
 
