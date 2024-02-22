@@ -49,6 +49,7 @@ This function should only modify configuration layer settings."
      pdf
      multiple-cursors
      (org :variables
+          org-enable-github-support t
           org-enable-roam-support t
           org-roam-ui-mode t)
      (shell :variables
