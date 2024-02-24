@@ -582,7 +582,7 @@ before packages are loaded."
   (setq browse-url-generic-program "~/edge-browser")
   (setq browse-url-browser-function #'browse-url-generic)
   ;; put gnu info file in ~/Info for reading
-  (add-to-list 'Info--default-directory-list "~/Info")
+  (add-to-list 'Info--default-directory-list "~/spacemacs.d/Info/")
   ;; change emacs theme to leuven dark
   (load-theme "leuven-dark")
 )
