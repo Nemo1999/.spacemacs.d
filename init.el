@@ -591,9 +591,17 @@ before packages are loaded."
   ;; LLM integration
   (require 'gptel)
 
-  (setq gptel-api-key "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")
-
-)
+  ;; ChatGPT
+  ;;(setq gptel-api-key "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")
+  ;; Gemini
+  ;; :key can be a function that returns the API key.
+  (setq-default
+   gptel-model "gemini-pro"
+   gptel-backend (gptel-make-gemini "Gemini"
+                   :key "AIzaSyC1X3UB2dbglLryOhY24j4G_tG22lMXI9Q"
+                   :stream t)
+   )
+  )
 
 
 ;; Do not write anything past this comment. This is where Emacs will
