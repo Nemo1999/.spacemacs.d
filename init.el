@@ -170,7 +170,7 @@ It should only modify the values of Spacemacs settings."
    ;; with `:variables' keyword (similar to layers). Check the editing styles
    ;; section of the documentation for details on available variables.
    ;; (default 'vim)
-   dotspacemacs-editing-style 'vim
+   dotspacemacs-editing-style 'hybrid
 
    ;; If non-nil show the version string in the Spacemacs buffer. It will
    ;; appear as (spacemacs version)@(emacs version)
@@ -242,8 +242,7 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
-                         spacemacs-light)
+   dotspacemacs-themes '(leuven-dark leuven)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
    ;; `all-the-icons', `custom', `doom', `vim-powerline' and `vanilla'. The
@@ -565,7 +564,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 This function is called only while dumping Spacemacs configuration. You can
 `require' or `load' the libraries of your choice that will be included in the
 dump."
-)
+  )
 
 
 (defun dotspacemacs/user-config ()
@@ -582,10 +581,6 @@ before packages are loaded."
   ;; create symbolic link to prevent space escape issue
   (setq browse-url-generic-program "~/edge-browser")
   (setq browse-url-browser-function #'browse-url-generic)
-  ;; change emacs theme to leuven dark
-  (load-theme "leuven-dark")
-
-
 
   ;; put gnu info file in ~/Info for reading
   (require 'info)
@@ -595,6 +590,8 @@ before packages are loaded."
 
   ;; LLM integration
   (require 'gptel)
+
+  (setq gptel-api-key "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")
 
 )
 
