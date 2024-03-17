@@ -556,6 +556,7 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
   (setq helm-move-to-line-cycle-in-source nil)
+  (helm-descbinds-mode -1)
 )
 
 
@@ -598,9 +599,13 @@ before packages are loaded."
   (setq-default
    gptel-model "gemini-pro"
    gptel-backend (gptel-make-gemini "Gemini"
-                   :key "AIzaSyC1X3UB2dbglLryOhY24j4G_tG22lMXI9Q"
+                   ;:key "AIzaSyC1X3UB2dbglLryOhY24j4G_tG22lMXI9Q"
+                   :key "AIzaSyCnGEAQTJmY8T01kJijJfFAihJMj2elAGo"
                    :stream t)
    )
+
+  (define-key evil-normal-state-map (kbd "C-c C-g") #'gptel-menu)
+  (define-key evil-insert-state-map (kbd "C-c C-g") #'gptel-menu)
   )
 
 
