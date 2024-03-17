@@ -574,10 +574,15 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  ;; use Shift + Arrow to switch window
   (windmove-default-keybindings)
+  ;; save emacs destop session
   (desktop-save-mode 1)
+  ;; save command history and kill-ring
   (savehist-mode 1)
   (add-to-list 'savehist-additional-variables 'kill-ring)
+
+  ;; enable edge-browser for opening links with 
   ;;(setq browse-url-generic-program "/mnt/c/Program\ Files\ \(x86\)/Microsoft/Edge/Application/msedge.exe")
   ;; create symbolic link to prevent space escape issue
   (setq browse-url-generic-program "~/edge-browser")
@@ -606,6 +611,50 @@ before packages are loaded."
 
   (define-key evil-normal-state-map (kbd "C-c C-g") #'gptel-menu)
   (define-key evil-insert-state-map (kbd "C-c C-g") #'gptel-menu)
+
+
+
+  ;; disable helm-descbind-mode to keep which-key working
+  (remove-hook 'helm-mode-hook 'helm-descbinds-mode)
+  (helm-descbinds-mode -1)
+
+  ;; org-roam-auto-sync
+  (org-roam-db-autosync-mode 1)
+
+
+  ;; update org-mode title
+  ;; try solve the issue of or-roam title update issue, not working now 
+  (defun boyuc/org-roam-modify-title ()
+    "Modify title of org-roam current node and update all backlinks in roam database."
+    (interactive)
+    (unless (org-roam-buffer-p) (error "Not in an org-roam buffer."))
+    (save-some-buffers t)
+    (let* ((old-title (org-roam-get-keyword "title"))
+           (ID (org-entry-get (point) "ID"))
+           (new-title (read-string "Enter new title: " old-title)))
+      (org-roam-set-keyword "title" new-title)
+      (save-buffer)
+      (let* ((new-slug (org-roam-node-slug (org-roam-node-at-point)))
+             (new-file-name (replace-regexp-in-string "-.*\\.org" (format "-%s.org" new-slug) (buffer-file-name)))
+             (new-buffer-name (file-name-nondirectory new-file-name)))
+	      (rename-buffer new-buffer-name)
+	      (rename-file (buffer-file-name) new-file-name 1)
+	      (set-visited-file-name new-file-name)) ; I don't know why this last command is necessary. Getting it from here: https://stackoverflow.com/a/384346/2422698
+      (save-buffer)
+      ;; Rename backlinks in the rest of the Org-roam database.
+      (let* ((search (format "[[id:%s][%s]]" ID old-title))
+             (replace (format "[[id:%s][%s]]" ID new-title))
+             (rg-command (format "rg -t org -lF %s ~/Org/roam/" search))
+             (file-list (split-string (shell-command-to-string rg-command))))
+	      (dolist (file file-list)
+          (let ((file-open (get-file-buffer file)))
+	          (find-file file)
+            (beginning-of-buffer)
+            (while (search-forward search nil t)
+              (replace-match replace))
+            (save-buffer)
+            (unless file-open
+              (kill-buffer)))))))
   )
 
 
