@@ -594,6 +594,9 @@ before packages are loaded."
   (info-initialize)
   (push "~/spacemacs.d/Info/" Info-directory-list )
 
+  ;; move line in visual mode with J and K
+  ;; not working for now
+  (setq vim-style-visual-line-move-text t)
 
   ;; LLM integration
   (require 'gptel)
