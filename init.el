@@ -625,6 +625,9 @@ before packages are loaded."
   ;; org-roam-auto-sync
   (org-roam-db-autosync-mode 1)
 
+  ;; set org image width
+  (setq org-image-actual-width 1000)
+
 
   ;; update org-mode title
   ;; try solve the issue of or-roam title update issue, not working now 
@@ -660,7 +663,6 @@ before packages are loaded."
             (unless file-open
               (kill-buffer)))))))
   )
-
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
