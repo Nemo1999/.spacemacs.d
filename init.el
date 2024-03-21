@@ -32,19 +32,24 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(html
-     markdown
+   '(
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      auto-completion
-     ;; better-defaults
+     lsp
+     html
+     emacs-lisp
+     markdown
+     cmake
+     restructuretext
+     python
+     c-c++
      emacs-lisp
      git
      helm
-     lsp
      markdown
      pdf
      multiple-cursors
@@ -59,7 +64,8 @@ This function should only modify configuration layer settings."
      spell-checking
      syntax-checking
      version-control
-     treemacs)
+     treemacs
+     )
 
 
    ;; List of additional packages that will be installed without being wrapped
@@ -557,7 +563,17 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
   (setq helm-move-to-line-cycle-in-source nil)
-  (helm-descbinds-mode -1)
+
+  ;; tvm ffi-navigator https://github.com/tqchen/ffi-navigator
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection '("python3" "-m" "ffi_navigator.langserver"))
+    :major-modes '(python-mode c++-mode)
+    :server-id 'ffi-navigator
+    :add-on? t))
+
+  ;; control org-roam directory
+  (setq org-roam-directory (file-truename "/local/mnt/workspace/boyuc/org-roam"))
 )
 
 
@@ -621,6 +637,9 @@ before packages are loaded."
   ;; disable helm-descbind-mode to keep which-key working
   (remove-hook 'helm-mode-hook 'helm-descbinds-mode)
   (helm-descbinds-mode -1)
+
+  ;; adapt indentation in org-mode
+  (setq org-adapt-indentation t)
 
   ;; org-roam-auto-sync
   (org-roam-db-autosync-mode 1)
