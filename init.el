@@ -39,18 +39,18 @@ This function should only modify configuration layer settings."
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      auto-completion
-     lsp
      html
      emacs-lisp
      markdown
      cmake
      restructuretext
      python
-     c-c++
+     (c-c++ :variables c-c++-backend 'lsp-clls)
      emacs-lisp
      git
      helm
      markdown
+     lsp
      pdf
      multiple-cursors
      (org :variables
@@ -650,6 +650,9 @@ before packages are loaded."
 
   ;; set org image width
   (setq org-image-actual-width 1000)
+
+  ;; highlight symbol near cursor point (change interactively)
+  (auto-highlight-symbol-mode 1)
 
 
   ;; update org-mode title
