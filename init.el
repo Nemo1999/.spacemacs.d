@@ -65,6 +65,11 @@ This function should only modify configuration layer settings."
      syntax-checking
      version-control
      treemacs
+
+     ;; leetcode layer
+     ;; need to first download private package into location
+     ;;git clone https://github.com/anmoljagetia/leetcode-emacs-layer.git ~/.emacs.d/private/myleetcode
+     myleetcode
      )
 
 
@@ -702,32 +707,8 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(evil-want-Y-yank-to-eol nil)
- '(helm-completion-style 'helm-fuzzy)
- '(hl-todo-keyword-faces
-   '(("TODO" . "#dc752f")
-     ("NEXT" . "#dc752f")
-     ("THEM" . "#2d9574")
-     ("PROG" . "#4f97d7")
-     ("OKAY" . "#4f97d7")
-     ("DONT" . "#f2241f")
-     ("FAIL" . "#f2241f")
-     ("DONE" . "#86dc2f")
-     ("NOTE" . "#b1951d")
-     ("KLUDGE" . "#b1951d")
-     ("HACK" . "#b1951d")
-     ("TEMP" . "#b1951d")
-     ("FIXME" . "#dc752f")
-     ("XXX+" . "#dc752f")
-     ("\\?\\?\\?+" . "#dc752f")))
- '(ispell-dictionary nil)
- '(org-fontify-done-headline nil)
- '(org-fontify-todo-headline nil)
  '(package-selected-packages
-   '(auto-dictionary company-web web-completion-data emmet-mode flyspell-correct-helm flyspell-correct gh-md gptel helm-css-scss impatient-mode markdown-toc ox-gfm pdf-view-restore pdf-tools tablist pug-mode sass-mode haml-mode scss-mode slim-mode tagedit web-mode dap-mode lsp-docker bui yapfify xterm-color ws-butler winum which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree queue toc-org spaceline powerline smeargle shell-pop restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox spinner orgit org-project-capture org-category-capture org-present org-pomodoro alert log4e gntp org-plus-contrib org-mime org-download org-bullets open-junk-file neotree multi-term move-text magit-gitflow magit-popup magit magit-section macrostep lorem-ipsum livid-mode skewer-mode simple-httpd live-py-mode linum-relative link-hint json-mode json-snatcher js2-refactor multiple-cursors js2-mode js-doc indent-guide hydra lv hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile projectile helm-mode-manager helm-make helm-gitignore request git-modes helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter git-commit with-editor transient compat fuzzy flycheck-pos-tip pos-tip flycheck seq flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-args evil-anzu anzu evil goto-chg eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump diminish diff-hl define-word cython-mode company-statistics company-anaconda company column-enforce-mode coffee-mode clean-aindent-mode bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol ht auto-compile anaconda-mode pythonic f dash s aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy wfnames helm-core async ac-ispell auto-complete popup cmake-mode))
- '(pdf-view-midnight-colors '("#b2b2b2" . "#292b2e")))
+   '(auto-dictionary ccls cmake-mode company-c-headers company-rtags company-web web-completion-data company-ycmd cpp-auto-include disaster emmet-mode esh-help eshell-prompt-extras eshell-z flycheck-rtags flycheck-ycmd flyspell-correct-helm flyspell-correct gendoxy gh-md google-c-style gptel helm-css-scss helm-ctest helm-rtags impatient-mode markdown-toc multi-term multi-vterm xref org-roam-ui websocket simple-httpd org-roam pdf-view-restore pdf-tools tablist prettier-js pug-mode rtags sass-mode haml-mode scss-mode shell-pop slim-mode tagedit terminal-here vterm web-beautify web-mode xterm-color ycmd request-deferred leetcode aio graphql ace-jump-helm-line ace-link aggressive-indent alert all-the-icons anaconda-mode auto-compile auto-highlight-symbol blacken browse-at-remote bui centered-cursor-mode clean-aindent-mode closql code-cells column-enforce-mode company company-anaconda concurrent counsel counsel-gtags ctable cython-mode dap-mode deferred define-word devdocs diff-hl diminish dired-quick-sort dotenv-mode drag-stuff dumb-jump editorconfig elisp-def elisp-slime-nav emacsql emr epc eval-sexp-fu evil-anzu evil-args evil-cleverparens evil-collection evil-easymotion evil-escape evil-evilified-state evil-exchange evil-goggles evil-iedit-state evil-indent-plus evil-lion evil-lisp-state evil-matchit evil-mc evil-nerd-commenter evil-numbers evil-org evil-surround evil-textobj-line evil-tutor evil-unimpaired evil-visual-mark-mode evil-visualstar expand-region eyebrowse fancy-battery flx-ido flycheck-elsa flycheck-package flycheck-pos-tip forge ggtags ghub git-commit git-link git-messenger git-modes git-timemachine gitignore-templates gntp gnuplot golden-ratio google-translate helm-ag helm-c-yasnippet helm-comint helm-company helm-cscope helm-descbinds helm-git-grep helm-ls-git helm-lsp helm-make helm-mode-manager helm-org helm-org-rifle helm-projectile helm-purpose helm-pydoc helm-swoop helm-themes helm-xref hide-comnt highlight-indentation highlight-numbers highlight-parentheses hl-todo holy-mode htmlize hungry-delete hybrid-mode importmagic indent-guide info+ inspector ivy link-hint live-py-mode load-env-vars log4e lorem-ipsum lsp-docker lsp-mode lsp-origami lsp-pyright lsp-python-ms lsp-treemacs lsp-ui macrostep magit magit-section markdown-mode multi-line nameless nose open-junk-file org-category-capture org-cliplink org-contrib org-download org-mime org-pomodoro org-present org-project-capture org-projectile org-rich-yank org-superstar orgit orgit-forge origami overseer ox-gfm paradox password-generator pcre2el pip-requirements pipenv pippel poetry popwin pos-tip py-isort pydoc pyenv-mode pylookup pytest pythonic pyvenv quickrun rainbow-delimiters request restart-emacs smeargle space-doc spaceline spacemacs-purpose-popwin spacemacs-whitespace-cleanup sphinx-doc stickyfunc-enhance string-edit-at-point string-inflection swiper symbol-overlay symon term-cursor toc-org transient treemacs-evil treemacs-icons-dired treemacs-magit treemacs-persp treemacs-projectile treepy undo-tree uuidgen vi-tilde-fringe vim-powerline volatile-highlights which-key winum with-editor writeroom-mode ws-butler xcscope yaml yaml-mode yapfify yasnippet yasnippet-snippets)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
