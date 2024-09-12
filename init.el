@@ -614,6 +614,9 @@ before packages are loaded."
   (setq browse-url-generic-program "~/edge-browser")
   (setq browse-url-browser-function #'browse-url-generic)
 
+  ;; enable org-download-screenshot in wsl
+  (setq org-download-screenshot-method "powershell.exe -Command \"(Get-Clipboard -Format image).Save('$(wslpath -w %s)')\"")
+
   ;; put gnu info file in ~/Info for reading
   (require 'info)
   (info-initialize)
@@ -708,7 +711,85 @@ This function is called at the very end of Spacemacs initialization."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(auto-dictionary ccls cmake-mode company-c-headers company-rtags company-web web-completion-data company-ycmd cpp-auto-include disaster emmet-mode esh-help eshell-prompt-extras eshell-z flycheck-rtags flycheck-ycmd flyspell-correct-helm flyspell-correct gendoxy gh-md google-c-style gptel helm-css-scss helm-ctest helm-rtags impatient-mode markdown-toc multi-term multi-vterm xref org-roam-ui websocket simple-httpd org-roam pdf-view-restore pdf-tools tablist prettier-js pug-mode rtags sass-mode haml-mode scss-mode shell-pop slim-mode tagedit terminal-here vterm web-beautify web-mode xterm-color ycmd request-deferred leetcode aio graphql ace-jump-helm-line ace-link aggressive-indent alert all-the-icons anaconda-mode auto-compile auto-highlight-symbol blacken browse-at-remote bui centered-cursor-mode clean-aindent-mode closql code-cells column-enforce-mode company company-anaconda concurrent counsel counsel-gtags ctable cython-mode dap-mode deferred define-word devdocs diff-hl diminish dired-quick-sort dotenv-mode drag-stuff dumb-jump editorconfig elisp-def elisp-slime-nav emacsql emr epc eval-sexp-fu evil-anzu evil-args evil-cleverparens evil-collection evil-easymotion evil-escape evil-evilified-state evil-exchange evil-goggles evil-iedit-state evil-indent-plus evil-lion evil-lisp-state evil-matchit evil-mc evil-nerd-commenter evil-numbers evil-org evil-surround evil-textobj-line evil-tutor evil-unimpaired evil-visual-mark-mode evil-visualstar expand-region eyebrowse fancy-battery flx-ido flycheck-elsa flycheck-package flycheck-pos-tip forge ggtags ghub git-commit git-link git-messenger git-modes git-timemachine gitignore-templates gntp gnuplot golden-ratio google-translate helm-ag helm-c-yasnippet helm-comint helm-company helm-cscope helm-descbinds helm-git-grep helm-ls-git helm-lsp helm-make helm-mode-manager helm-org helm-org-rifle helm-projectile helm-purpose helm-pydoc helm-swoop helm-themes helm-xref hide-comnt highlight-indentation highlight-numbers highlight-parentheses hl-todo holy-mode htmlize hungry-delete hybrid-mode importmagic indent-guide info+ inspector ivy link-hint live-py-mode load-env-vars log4e lorem-ipsum lsp-docker lsp-mode lsp-origami lsp-pyright lsp-python-ms lsp-treemacs lsp-ui macrostep magit magit-section markdown-mode multi-line nameless nose open-junk-file org-category-capture org-cliplink org-contrib org-download org-mime org-pomodoro org-present org-project-capture org-projectile org-rich-yank org-superstar orgit orgit-forge origami overseer ox-gfm paradox password-generator pcre2el pip-requirements pipenv pippel poetry popwin pos-tip py-isort pydoc pyenv-mode pylookup pytest pythonic pyvenv quickrun rainbow-delimiters request restart-emacs smeargle space-doc spaceline spacemacs-purpose-popwin spacemacs-whitespace-cleanup sphinx-doc stickyfunc-enhance string-edit-at-point string-inflection swiper symbol-overlay symon term-cursor toc-org transient treemacs-evil treemacs-icons-dired treemacs-magit treemacs-persp treemacs-projectile treepy undo-tree uuidgen vi-tilde-fringe vim-powerline volatile-highlights which-key winum with-editor writeroom-mode ws-butler xcscope yaml yaml-mode yapfify yasnippet yasnippet-snippets)))
+   '(ace-jump-helm wh-line ace-link add-node-modules-path aggressive-indent
+                        all-the-icons all-the-icons-nerd-fonts anaconda-mode
+                        auto-compile auto-highlight-symbol blacken
+                        browse-at-remote bui ccls centered-cursor-mode
+                        clean-aindent-mode closql cmake-mode code-cells
+                        column-enforce-mode company company-anaconda
+                        company-c-headers company-emoji company-rtags
+                        company-web company-ycmd concurrent counsel counsel-css
+                        cpp-auto-include ctable cython-mode dap-mode deferred
+                        define-word devdocs diff-hl diminish dired-quick-sort
+                        disaster dotenv-mode drag-stuff dumb-jump editorconfig
+                        elisp-def elisp-slime-nav emacsql emmet-mode
+                        emoji-cheat-sheet-plus emr epc esh-help
+                        eshell-prompt-extras eshell-z eval-sexp-fu evil-anzu
+                        evil-args evil-cleverparens evil-collection
+                        evil-easymotion evil-escape evil-evilified-state
+                        evil-exchange evil-goggles evil-iedit-state
+                        evil-indent-plus evil-lion evil-lisp-state evil-matchit
+                        evil-mc evil-nerd-commenter evil-numbers evil-surround
+                        evil-textobj-line evil-tutor evil-unimpaired
+                        evil-visual-mark-mode evil-visualstar expand-region
+                        eyebrowse fancy-battery flx-ido flycheck-elsa
+                        flycheck-package flycheck-pos-tip flycheck-rtags
+                        flycheck-ycmd forge gendoxy gh-md ghub git-commit
+                        git-link git-messenger git-modes git-timemachine
+                        gitignore-templates golden-ratio google-c-style
+                        google-translate gptel haml-mode helm-ag
+                        helm-c-yasnippet helm-comint helm-company helm-css-scss
+                        helm-ctest helm-descbinds helm-git-grep helm-ls-git
+                        helm-lsp helm-make helm-mode-manager helm-org
+                        helm-projectile helm-purpose helm-pydoc helm-rtags
+                        helm-swoop helm-themes helm-xref hide-comnt
+                        highlight-indentation highlight-numbers
+                        highlight-parentheses hl-todo holy-mode htmlize
+                        hungry-delete hybrid-mode impatient-mode importmagic
+                        indent-guide info+ inspector ivy link-hint live-py-mode
+                        load-env-vars lorem-ipsum lsp-docker lsp-mode
+                        lsp-origami lsp-pyright lsp-python-ms lsp-treemacs
+                        lsp-ui macrostep magit magit-section markdown-mode
+                        markdown-toc mmm-mode multi-line multi-term multi-vterm
+                        nameless nerd-icons nose open-junk-file org-roam-ui
+                        org-superstar origami overseer ox-gfm paradox
+                        password-generator pcre2el pdf-tools pdf-view-restore
+                        pip-requirements pipenv pippel poetry popwin pos-tip
+                        prettier-js pug-mode py-isort pydoc pyenv-mode pylookup
+                        pytest pythonic pyvenv quickrun rainbow-delimiters
+                        request request-deferred restart-emacs rtags sass-mode
+                        scss-mode seq shell-pop simple-httpd slim-mode smeargle
+                        space-doc spaceline spacemacs-purpose-popwin
+                        spacemacs-whitespace-cleanup sphinx-doc
+                        string-edit-at-point string-inflection swiper
+                        symbol-overlay symon tablist tagedit term-cursor
+                        terminal-here toc-org transient treemacs-evil
+                        treemacs-icons-dired treemacs-magit treemacs-persp
+                        treemacs-projectile treepy undo-tree uuidgen valign
+                        vi-tilde-fringe vim-powerline vmd-mode
+                        volatile-highlights vterm web-beautify
+                        web-completion-data web-mode websocket which-key winum
+                        with-editor writeroom-mode ws-butler xterm-color yaml
+                        yapfify yasnippet yasnippet-snippets ycmd))
+ '(safe-local-variable-values
+   '((evil dired-hide-details-mode 1)
+     (eval dolist
+           (face
+            '(org-block-begin-line org-block-end-line org-verbatim org-block))
+           (set-face-attribute face nil :inherit 'fixed-pitch))
+     (eval setq org-hide-emphasis-markers t)
+     (eval progn
+           (define-key evil-normal-state-map (kbd "M-,") #'org-mark-ring-goto)
+           (define-key evil-insert-state-map (kbd "M-,") #'org-mark-ring-goto))
+     (eval let*
+           ((project-dir
+             (expand-file-name
+              (locate-dominating-file default-directory ".dir-locals.el")))
+            (db-dir (expand-file-name "org-roam.db" project-dir)))
+           (progn
+             (setq-local org-roam-directory project-dir)
+             (setq-local org-roam-db-location db-dir)))
+     (eval setf (cdr (assoc 'file org-link-frame-setup)) 'find-file))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
