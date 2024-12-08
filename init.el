@@ -49,6 +49,9 @@ This function should only modify configuration layer settings."
      emacs-lisp
      git
      helm
+     (rust :variables
+           lsp-rust-analyzer-cargo-auto-reload t
+           rustic-format-on-save t)
      markdown
      lsp
      pdf
