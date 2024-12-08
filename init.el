@@ -62,8 +62,8 @@ This function should only modify configuration layer settings."
           org-enable-roam-protocol t
           org-enable-roam-ui t)
      (shell :variables
-             shell-default-height 30
-             shell-default-position 'bottom)
+            shell-default-height 30
+            shell-default-position 'bottom)
      spell-checking
      syntax-checking
      version-control
@@ -138,7 +138,7 @@ It should only modify the values of Spacemacs settings."
    ;; This variable has no effect if Emacs is launched with the parameter
    ;; `--insecure' which forces the value of this variable to nil.
    ;; (default t)
-   dotspacemacs-elpa-https t
+   dotspacemacs-elpa-https nil
 
    ;; Maximum allowed time in seconds to contact an ELPA repository.
    ;; (default 5)
@@ -272,7 +272,9 @@ It should only modify the values of Spacemacs settings."
    ;; (default t)
    dotspacemacs-colorize-cursor-according-to-state t
 
-   ;; Default font or prioritized list of fonts. The `:size' can be specified as
+   ;; Default font or prioritized list of fonts. This setting has no effect when
+   ;; running Emacs in terminal. The font set here will be used for default and
+   ;; fixed-pitch faces. The `:size' can be specified as
    ;; a non-negative integer (pixel size), or a floating-point (point size).
    ;; Point size is recommended, because it's device independent. (default 10.0)
    dotspacemacs-default-font '("Source Code Pro"
@@ -353,6 +355,10 @@ It should only modify the values of Spacemacs settings."
    ;; Which-key frame position. Possible values are `right', `bottom' and
    ;; `right-then-bottom'. right-then-bottom tries to display the frame to the
    ;; right; if there is insufficient space it displays it at the bottom.
+   ;; It is also possible to use a posframe with the following cons cell
+   ;; `(posframe . position)' where position can be one of `center',
+   ;; `top-center', `bottom-center', `top-left-corner', `top-right-corner',
+   ;; `top-right-corner', `bottom-left-corner' or `bottom-right-corner'
    ;; (default 'bottom)
    dotspacemacs-which-key-position 'bottom
 
@@ -362,6 +368,22 @@ It should only modify the values of Spacemacs settings."
    ;; displays the buffer in a same-purpose window even if the buffer can be
    ;; displayed in the current window. (default nil)
    dotspacemacs-switch-to-buffer-prefers-purpose nil
+
+   ;; Whether side windows (such as those created by treemacs or neotree)
+   ;; are kept or minimized by `spacemacs/toggle-maximize-window' (SPC w m).
+   ;; (default t)
+   dotspacemacs-maximize-window-keep-side-windows t
+
+   ;; If nil, no load-hints enabled. If t, enable the `load-hints' which will
+   ;; put the most likely path on the top of `load-path' to reduce walking
+   ;; through the whole `load-path'. It's an experimental feature to speedup
+   ;; Spacemacs on Windows. Refer the FAQ.org "load-hints" session for details.
+   dotspacemacs-enable-load-hints nil
+
+   ;; If t, enable the `package-quickstart' feature to avoid full package
+   ;; loading, otherwise no `package-quickstart' attemption (default nil).
+   ;; Refer the FAQ.org "package-quickstart" section for details.
+   dotspacemacs-enable-package-quickstart nil
 
    ;; If non-nil a progress bar is displayed when spacemacs is loading. This
    ;; may increase the boot time on some systems and emacs builds, set it to
@@ -484,6 +506,13 @@ It should only modify the values of Spacemacs settings."
    ;; (default '("rg" "ag" "pt" "ack" "grep"))
    dotspacemacs-search-tools '("rg" "ag" "pt" "ack" "grep")
 
+   ;; The backend used for undo/redo functionality. Possible values are
+   ;; `undo-fu', `undo-redo' and `undo-tree' see also `evil-undo-system'.
+   ;; Note that saved undo history does not get transferred when changing
+   ;; your undo system. The default is currently `undo-fu' as `undo-tree'
+   ;; is not maintained anymore and `undo-redo' is very basic."
+   dotspacemacs-undo-system 'undo-fu
+
    ;; Format specification for setting the frame title.
    ;; %a - the `abbreviated-file-name', or `buffer-name'
    ;; %t - `projectile-project-name'
@@ -519,6 +548,9 @@ It should only modify the values of Spacemacs settings."
    ;; to aggressively delete empty line and long sequences of whitespace,
    ;; `trailing' to delete only the whitespace at end of lines, `changed' to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
+   ;; The variable `global-spacemacs-whitespace-cleanup-modes' controls
+   ;; which major modes have whitespace cleanup enabled or disabled
+   ;; by default.
    ;; (default nil)
    dotspacemacs-whitespace-cleanup nil
 
@@ -562,7 +594,7 @@ default it calls `spacemacs/load-spacemacs-env' which loads the environment
 variables declared in `~/.spacemacs.env' or `~/.spacemacs.d/.spacemacs.env'.
 See the header of this file for more information."
   (spacemacs/load-spacemacs-env)
-)
+  )
 
 (defun dotspacemacs/user-init ()
   "Initialization for user code:
@@ -586,7 +618,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
   ;; control org-roam directory
   (setq org-roam-directory (file-truename "/local/mnt/workspace/boyuc/org-roam"))
-)
+  )
 
 
 (defun dotspacemacs/user-load ()
@@ -612,7 +644,7 @@ before packages are loaded."
   (savehist-mode 1)
   (add-to-list 'savehist-additional-variables 'kill-ring)
 
-  ;; enable edge-browser for opening links with 
+  ;; enable edge-browser for opening links with
   ;;(setq browse-url-generic-program "/mnt/c/Program\ Files\ \(x86\)/Microsoft/Edge/Application/msedge.exe")
   ;; create symbolic link to prevent space escape issue
   (setq browse-url-generic-program "~/edge-browser")
@@ -640,7 +672,7 @@ before packages are loaded."
   (setq-default
    gptel-model "gemini-pro"
    gptel-backend (gptel-make-gemini "Gemini"
-                   ;:key "AIzaSyC1X3UB2dbglLryOhY24j4G_tG22lMXI9Q"
+                                        ;:key "AIzaSyC1X3UB2dbglLryOhY24j4G_tG22lMXI9Q"
                    :key "AIzaSyCnGEAQTJmY8T01kJijJfFAihJMj2elAGo"
                    :stream t)
    )
@@ -668,7 +700,7 @@ before packages are loaded."
 
 
   ;; update org-mode title
-  ;; try solve the issue of or-roam title update issue, not working now 
+  ;; try solve the issue of or-roam title update issue, not working now
   (defun boyuc/org-roam-modify-title ()
     "Modify title of org-roam current node and update all backlinks in roam database."
     (interactive)
@@ -682,18 +714,18 @@ before packages are loaded."
       (let* ((new-slug (org-roam-node-slug (org-roam-node-at-point)))
              (new-file-name (replace-regexp-in-string "-.*\\.org" (format "-%s.org" new-slug) (buffer-file-name)))
              (new-buffer-name (file-name-nondirectory new-file-name)))
-	      (rename-buffer new-buffer-name)
-	      (rename-file (buffer-file-name) new-file-name 1)
-	      (set-visited-file-name new-file-name)) ; I don't know why this last command is necessary. Getting it from here: https://stackoverflow.com/a/384346/2422698
+        (rename-buffer new-buffer-name)
+        (rename-file (buffer-file-name) new-file-name 1)
+        (set-visited-file-name new-file-name)) ; I don't know why this last command is necessary. Getting it from here: https://stackoverflow.com/a/384346/2422698
       (save-buffer)
       ;; Rename backlinks in the rest of the Org-roam database.
       (let* ((search (format "[[id:%s][%s]]" ID old-title))
              (replace (format "[[id:%s][%s]]" ID new-title))
              (rg-command (format "rg -t org -lF %s ~/Org/roam/" search))
              (file-list (split-string (shell-command-to-string rg-command))))
-	      (dolist (file file-list)
+        (dolist (file file-list)
           (let ((file-open (get-file-buffer file)))
-	          (find-file file)
+            (find-file file)
             (beginning-of-buffer)
             (while (search-forward search nil t)
               (replace-match replace))
@@ -715,85 +747,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(ace-jump-helm wh-line ace-link add-node-modules-path aggressive-indent
-                        all-the-icons all-the-icons-nerd-fonts anaconda-mode
-                        auto-compile auto-highlight-symbol blacken
-                        browse-at-remote bui ccls centered-cursor-mode
-                        clean-aindent-mode closql cmake-mode code-cells
-                        column-enforce-mode company company-anaconda
-                        company-c-headers company-emoji company-rtags
-                        company-web company-ycmd concurrent counsel counsel-css
-                        cpp-auto-include ctable cython-mode dap-mode deferred
-                        define-word devdocs diff-hl diminish dired-quick-sort
-                        disaster dotenv-mode drag-stuff dumb-jump editorconfig
-                        elisp-def elisp-slime-nav emacsql emmet-mode
-                        emoji-cheat-sheet-plus emr epc esh-help
-                        eshell-prompt-extras eshell-z eval-sexp-fu evil-anzu
-                        evil-args evil-cleverparens evil-collection
-                        evil-easymotion evil-escape evil-evilified-state
-                        evil-exchange evil-goggles evil-iedit-state
-                        evil-indent-plus evil-lion evil-lisp-state evil-matchit
-                        evil-mc evil-nerd-commenter evil-numbers evil-surround
-                        evil-textobj-line evil-tutor evil-unimpaired
-                        evil-visual-mark-mode evil-visualstar expand-region
-                        eyebrowse fancy-battery flx-ido flycheck-elsa
-                        flycheck-package flycheck-pos-tip flycheck-rtags
-                        flycheck-ycmd forge gendoxy gh-md ghub git-commit
-                        git-link git-messenger git-modes git-timemachine
-                        gitignore-templates golden-ratio google-c-style
-                        google-translate gptel haml-mode helm-ag
-                        helm-c-yasnippet helm-comint helm-company helm-css-scss
-                        helm-ctest helm-descbinds helm-git-grep helm-ls-git
-                        helm-lsp helm-make helm-mode-manager helm-org
-                        helm-projectile helm-purpose helm-pydoc helm-rtags
-                        helm-swoop helm-themes helm-xref hide-comnt
-                        highlight-indentation highlight-numbers
-                        highlight-parentheses hl-todo holy-mode htmlize
-                        hungry-delete hybrid-mode impatient-mode importmagic
-                        indent-guide info+ inspector ivy link-hint live-py-mode
-                        load-env-vars lorem-ipsum lsp-docker lsp-mode
-                        lsp-origami lsp-pyright lsp-python-ms lsp-treemacs
-                        lsp-ui macrostep magit magit-section markdown-mode
-                        markdown-toc mmm-mode multi-line multi-term multi-vterm
-                        nameless nerd-icons nose open-junk-file org-roam-ui
-                        org-superstar origami overseer ox-gfm paradox
-                        password-generator pcre2el pdf-tools pdf-view-restore
-                        pip-requirements pipenv pippel poetry popwin pos-tip
-                        prettier-js pug-mode py-isort pydoc pyenv-mode pylookup
-                        pytest pythonic pyvenv quickrun rainbow-delimiters
-                        request request-deferred restart-emacs rtags sass-mode
-                        scss-mode seq shell-pop simple-httpd slim-mode smeargle
-                        space-doc spaceline spacemacs-purpose-popwin
-                        spacemacs-whitespace-cleanup sphinx-doc
-                        string-edit-at-point string-inflection swiper
-                        symbol-overlay symon tablist tagedit term-cursor
-                        terminal-here toc-org transient treemacs-evil
-                        treemacs-icons-dired treemacs-magit treemacs-persp
-                        treemacs-projectile treepy undo-tree uuidgen valign
-                        vi-tilde-fringe vim-powerline vmd-mode
-                        volatile-highlights vterm web-beautify
-                        web-completion-data web-mode websocket which-key winum
-                        with-editor writeroom-mode ws-butler xterm-color yaml
-                        yapfify yasnippet yasnippet-snippets ycmd))
- '(safe-local-variable-values
-   '((evil dired-hide-details-mode 1)
-     (eval dolist
-           (face
-            '(org-block-begin-line org-block-end-line org-verbatim org-block))
-           (set-face-attribute face nil :inherit 'fixed-pitch))
-     (eval setq org-hide-emphasis-markers t)
-     (eval progn
-           (define-key evil-normal-state-map (kbd "M-,") #'org-mark-ring-goto)
-           (define-key evil-insert-state-map (kbd "M-,") #'org-mark-ring-goto))
-     (eval let*
-           ((project-dir
-             (expand-file-name
-              (locate-dominating-file default-directory ".dir-locals.el")))
-            (db-dir (expand-file-name "org-roam.db" project-dir)))
-           (progn
-             (setq-local org-roam-directory project-dir)
-             (setq-local org-roam-db-location db-dir)))
-     (eval setf (cdr (assoc 'file org-link-frame-setup)) 'find-file))))
+   '(bui evil-org gnuplot helm-org-rifle org-cliplink org-contrib org-download org-mime org-pomodoro alert log4e gntp org-present org-projectile org-project-capture org-category-capture org-rich-yank org-roam-ui websocket org-roam orgit org ox-gfm ace-jump-helm-line ace-link aggressive-indent all-the-icons attrap auto-compile auto-dictionary auto-highlight-symbol auto-yasnippet blacken browse-at-remote ccls centered-cursor-mode clean-aindent-mode cmake-mode cmm-mode code-cells code-review emojify a column-enforce-mode company-anaconda anaconda-mode company-c-headers company-cabal company-rtags company-web web-completion-data company-ycmd cpp-auto-include cython-mode dante lcr eldoc define-word devdocs mathjax diff-hl dired-quick-sort disable-mouse disaster drag-stuff dumb-jump eat editorconfig elisp-def elisp-demos elisp-slime-nav emmet-mode emr clang-format list-utils esh-help eshell-prompt-extras eshell-z eval-sexp-fu evil-anzu anzu evil-args evil-cleverparens paredit evil-collection annalist evil-easymotion evil-escape evil-exchange evil-goggles evil-iedit-state iedit evil-indent-plus evil-lion evil-lisp-state evil-matchit evil-mc evil-nerd-commenter evil-numbers evil-surround evil-textobj-line evil-tutor evil-unimpaired evil-visual-mark-mode evil-visualstar expand-region eyebrowse fancy-battery flx-ido flx flycheck-elsa flycheck-haskell flycheck-package package-lint flycheck-pos-tip pos-tip flycheck-rtags flycheck-ycmd flyspell-correct-helm flyspell-correct forge yaml ghub closql emacsql treepy gendoxy gh-md git-link git-messenger git-modes git-timemachine gitignore-templates golden-ratio google-c-style google-translate gptel haskell-snippets helm-ag helm-c-yasnippet helm-comint helm-company company helm-css-scss helm-ctest helm-descbinds helm-git-grep helm-hoogle helm-ls-git helm-lsp helm-make helm-mode-manager helm-org helm-projectile helm-purpose helm-pydoc helm-rtags helm-swoop helm-themes helm-xref helm wfnames helm-core hide-comnt highlight-indentation highlight-numbers parent-mode highlight-parentheses hindent hl-todo hlint-refactor hungry-delete impatient-mode htmlize simple-httpd importmagic epc ctable concurrent indent-guide info+ inspector link-hint live-py-mode lorem-ipsum lsp-haskell haskell-mode lsp-origami origami lsp-pyright lsp-treemacs lsp-ui lsp-mode macrostep markdown-toc multi-line shut-up multi-term multi-vterm nameless open-junk-file org-superstar overseer paradox password-generator pdf-view-restore pdf-tools tablist pip-requirements pipenv load-env-vars pippel poetry popup popwin prettier-js pug-mode py-isort pydoc pyenv-mode pythonic pylookup pytest pyvenv quickrun rainbow-delimiters restart-emacs ron-mode rtags rustic flycheck xterm-color spinner markdown-mode f rust-mode xref sass-mode haml-mode scss-mode shell-pop slim-mode smartparens smeargle space-doc spaceline powerline spacemacs-purpose-popwin spacemacs-whitespace-cleanup sphinx-doc string-edit-at-point string-inflection symbol-overlay symon tagedit term-cursor terminal-here toc-org toml-mode treemacs-evil treemacs-icons-dired treemacs-magit magit with-editor transient magit-section compat treemacs-persp persp-mode treemacs-projectile treemacs projectile cfrs ht pfuture ace-window avy posframe undo-fu undo-fu-session uuidgen vi-tilde-fringe vim-powerline volatile-highlights vterm vundo web-beautify web-mode wgrep window-purpose imenu-list winum writeroom-mode visual-fill-column ws-butler yaml-mode yapfify yasnippet-snippets yasnippet ycmd pkg-info request-deferred s dash request deferred epl async bind-map diminish dotenv-mode evil-evilified-state holy-mode hybrid-mode evil goto-chg hydra lv pcre2el which-key)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
