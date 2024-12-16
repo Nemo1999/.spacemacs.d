@@ -44,7 +44,7 @@ This function should only modify configuration layer settings."
      markdown
      cmake
      restructuretext
-     python
+     (python :variables python-backend 'lsp)
      (c-c++ :variables c-c++-backend 'lsp-clls)
      emacs-lisp
      git
