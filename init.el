@@ -32,7 +32,9 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(yaml
+   '(javascript
+     dap
+     yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -635,6 +637,15 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  (package-vc-install '(ultra-scroll :vc-backend Git :url  "https://github.com/jdtsmith/ultra-scroll"))
+  (use-package ultra-scroll
+                                        ;:load-path "~/code/emacs/ultra-scroll" ; if you git clone'd instead of package-vc-install
+    :init
+    (setq scroll-conservatively 101 ; important!
+          scroll-margin 0)
+    :config
+    (ultra-scroll-mode 1))
+
   (global-auto-highlight-symbol-mode)
   ;; use Shift + Arrow to switch window
   (windmove-default-keybindings)
@@ -741,17 +752,19 @@ before packages are loaded."
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(bui evil-org gnuplot helm-org-rifle org-cliplink org-contrib org-download org-mime org-pomodoro alert log4e gntp org-present org-projectile org-project-capture org-category-capture org-rich-yank org-roam-ui websocket org-roam orgit org ox-gfm ace-jump-helm-line ace-link aggressive-indent all-the-icons attrap auto-compile auto-dictionary auto-highlight-symbol auto-yasnippet blacken browse-at-remote ccls centered-cursor-mode clean-aindent-mode cmake-mode cmm-mode code-cells code-review emojify a column-enforce-mode company-anaconda anaconda-mode company-c-headers company-cabal company-rtags company-web web-completion-data company-ycmd cpp-auto-include cython-mode dante lcr eldoc define-word devdocs mathjax diff-hl dired-quick-sort disable-mouse disaster drag-stuff dumb-jump eat editorconfig elisp-def elisp-demos elisp-slime-nav emmet-mode emr clang-format list-utils esh-help eshell-prompt-extras eshell-z eval-sexp-fu evil-anzu anzu evil-args evil-cleverparens paredit evil-collection annalist evil-easymotion evil-escape evil-exchange evil-goggles evil-iedit-state iedit evil-indent-plus evil-lion evil-lisp-state evil-matchit evil-mc evil-nerd-commenter evil-numbers evil-surround evil-textobj-line evil-tutor evil-unimpaired evil-visual-mark-mode evil-visualstar expand-region eyebrowse fancy-battery flx-ido flx flycheck-elsa flycheck-haskell flycheck-package package-lint flycheck-pos-tip pos-tip flycheck-rtags flycheck-ycmd flyspell-correct-helm flyspell-correct forge yaml ghub closql emacsql treepy gendoxy gh-md git-link git-messenger git-modes git-timemachine gitignore-templates golden-ratio google-c-style google-translate gptel haskell-snippets helm-ag helm-c-yasnippet helm-comint helm-company company helm-css-scss helm-ctest helm-descbinds helm-git-grep helm-hoogle helm-ls-git helm-lsp helm-make helm-mode-manager helm-org helm-projectile helm-purpose helm-pydoc helm-rtags helm-swoop helm-themes helm-xref helm wfnames helm-core hide-comnt highlight-indentation highlight-numbers parent-mode highlight-parentheses hindent hl-todo hlint-refactor hungry-delete impatient-mode htmlize simple-httpd importmagic epc ctable concurrent indent-guide info+ inspector link-hint live-py-mode lorem-ipsum lsp-haskell haskell-mode lsp-origami origami lsp-pyright lsp-treemacs lsp-ui lsp-mode macrostep markdown-toc multi-line shut-up multi-term multi-vterm nameless open-junk-file org-superstar overseer paradox password-generator pdf-view-restore pdf-tools tablist pip-requirements pipenv load-env-vars pippel poetry popup popwin prettier-js pug-mode py-isort pydoc pyenv-mode pythonic pylookup pytest pyvenv quickrun rainbow-delimiters restart-emacs ron-mode rtags rustic flycheck xterm-color spinner markdown-mode f rust-mode xref sass-mode haml-mode scss-mode shell-pop slim-mode smartparens smeargle space-doc spaceline powerline spacemacs-purpose-popwin spacemacs-whitespace-cleanup sphinx-doc string-edit-at-point string-inflection symbol-overlay symon tagedit term-cursor terminal-here toc-org toml-mode treemacs-evil treemacs-icons-dired treemacs-magit magit with-editor transient magit-section compat treemacs-persp persp-mode treemacs-projectile treemacs projectile cfrs ht pfuture ace-window avy posframe undo-fu undo-fu-session uuidgen vi-tilde-fringe vim-powerline volatile-highlights vterm vundo web-beautify web-mode wgrep window-purpose imenu-list winum writeroom-mode visual-fill-column ws-butler yaml-mode yapfify yasnippet-snippets yasnippet ycmd pkg-info request-deferred s dash request deferred epl async bind-map diminish dotenv-mode evil-evilified-state holy-mode hybrid-mode evil goto-chg hydra lv pcre2el which-key)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-)
+  (custom-set-variables
+   ;; custom-set-variables was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(package-selected-packages
+     '(ultra-scroll dap-mode lsp-docker bui evil-org gnuplot helm-org-rifle org-cliplink org-contrib org-download org-mime org-pomodoro alert log4e gntp org-present org-projectile org-project-capture org-category-capture org-rich-yank org-roam-ui websocket org-roam orgit org ox-gfm ace-jump-helm-line ace-link aggressive-indent all-the-icons attrap auto-compile auto-dictionary auto-highlight-symbol auto-yasnippet blacken browse-at-remote ccls centered-cursor-mode clean-aindent-mode cmake-mode cmm-mode code-cells code-review emojify a column-enforce-mode company-anaconda anaconda-mode company-c-headers company-cabal company-rtags company-web web-completion-data company-ycmd cpp-auto-include cython-mode dante lcr eldoc define-word devdocs mathjax diff-hl dired-quick-sort disable-mouse disaster drag-stuff dumb-jump eat editorconfig elisp-def elisp-demos elisp-slime-nav emmet-mode emr clang-format list-utils esh-help eshell-prompt-extras eshell-z eval-sexp-fu evil-anzu anzu evil-args evil-cleverparens paredit evil-collection annalist evil-easymotion evil-escape evil-exchange evil-goggles evil-iedit-state iedit evil-indent-plus evil-lion evil-lisp-state evil-matchit evil-mc evil-nerd-commenter evil-numbers evil-surround evil-textobj-line evil-tutor evil-unimpaired evil-visual-mark-mode evil-visualstar expand-region eyebrowse fancy-battery flx-ido flx flycheck-elsa flycheck-haskell flycheck-package package-lint flycheck-pos-tip pos-tip flycheck-rtags flycheck-ycmd flyspell-correct-helm flyspell-correct forge yaml ghub closql emacsql treepy gendoxy gh-md git-link git-messenger git-modes git-timemachine gitignore-templates golden-ratio google-c-style google-translate gptel haskell-snippets helm-ag helm-c-yasnippet helm-comint helm-company company helm-css-scss helm-ctest helm-descbinds helm-git-grep helm-hoogle helm-ls-git helm-lsp helm-make helm-mode-manager helm-org helm-projectile helm-purpose helm-pydoc helm-rtags helm-swoop helm-themes helm-xref helm wfnames helm-core hide-comnt highlight-indentation highlight-numbers parent-mode highlight-parentheses hindent hl-todo hlint-refactor hungry-delete impatient-mode htmlize simple-httpd importmagic epc ctable concurrent indent-guide info+ inspector link-hint live-py-mode lorem-ipsum lsp-haskell haskell-mode lsp-origami origami lsp-pyright lsp-treemacs lsp-ui lsp-mode macrostep markdown-toc multi-line shut-up multi-term multi-vterm nameless open-junk-file org-superstar overseer paradox password-generator pdf-view-restore pdf-tools tablist pip-requirements pipenv load-env-vars pippel poetry popup popwin prettier-js pug-mode py-isort pydoc pyenv-mode pythonic pylookup pytest pyvenv quickrun rainbow-delimiters restart-emacs ron-mode rtags rustic flycheck xterm-color spinner markdown-mode f rust-mode xref sass-mode haml-mode scss-mode shell-pop slim-mode smartparens smeargle space-doc spaceline powerline spacemacs-purpose-popwin spacemacs-whitespace-cleanup sphinx-doc string-edit-at-point string-inflection symbol-overlay symon tagedit term-cursor terminal-here toc-org toml-mode treemacs-evil treemacs-icons-dired treemacs-magit magit with-editor transient magit-section compat treemacs-persp persp-mode treemacs-projectile treemacs projectile cfrs ht pfuture ace-window avy posframe undo-fu undo-fu-session uuidgen vi-tilde-fringe vim-powerline volatile-highlights vterm vundo web-beautify web-mode wgrep window-purpose imenu-list winum writeroom-mode visual-fill-column ws-butler yaml-mode yapfify yasnippet-snippets yasnippet ycmd pkg-info request-deferred s dash request deferred epl async bind-map diminish dotenv-mode evil-evilified-state holy-mode hybrid-mode evil goto-chg hydra lv pcre2el which-key))
+   '(package-vc-selected-packages
+     '((ultra-scroll :vc-backend Git :url "https://github.com/jdtsmith/ultra-scroll"))))
+  (custom-set-faces
+   ;; custom-set-faces was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   )
+  )
