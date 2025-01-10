@@ -32,7 +32,9 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(yaml
+   '(shell-scripts
+     yaml
+     dap-mode
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -635,6 +637,42 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+
+  ;; dap-debug setting
+  (with-eval-after-load 'dap
+    (dap-register-debug-template
+     "Python :: Run pytest (Converter -- test_rmsnorm.py)"
+     (list :type "python"
+           :args "/local/mnt/workspace/boyuc/aisw-mainline/QAISW/FirstParty/ModelTools/Converters/test/python/converters/converter_ir -k test_rmsnorm"
+           :cwd nil
+           :program nil
+           :module "pytest"
+           :request "launch"
+           :name "Python :: Run pytest (Converter -- test_rmsnorm.py)"))
+    (dap-register-debug-template
+     "Python :: Convert MEP C4 instancenorm"
+     (list :name "Python :: Convert MEP C4 instancenorm"
+           :type "python"
+           :args "-i ecsv2_warp-diff_delta.quant.onnx"
+           :cwd "/local/mnt/workspace/boyuc/Model-C4-QDQ-v0.2.1"
+           :module nil
+           :program "/local/mnt/workspace/boyuc/aisw-mainline/build2/qaisw-v2.30.0.241204021741_101082/bin/x86_64-linux-clang/qairt-converter"
+           :request "launch"))
+    (dap-register-debug-template
+     "Python :: attach remote host"
+     (list :type "python"
+           :request "attach"
+           :debugger "debugpy"
+           :connect (list
+                     :host "localhost"
+                     :port "5678")
+           :name "Python :: attach remote host"
+           ))
+    )
+
+
+
+
   (global-auto-highlight-symbol-mode)
   ;; use Shift + Arrow to switch window
   (windmove-default-keybindings)
