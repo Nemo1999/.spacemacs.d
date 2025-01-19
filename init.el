@@ -47,7 +47,11 @@ This function should only modify configuration layer settings."
      cmake
      restructuretext
      (python :variables python-backend 'lsp)
-     (c-c++ :variables c-c++-backend 'lsp-clls)
+     (c-c++ :variables
+            c-c++-backend 'lsp-clls,
+            c-c++-lsp-enable-semantic-highlight 'rainbow
+            c-c++-dap-adapters '(dap-lldb dap-cpptools)
+            )
      emacs-lisp
      git
      helm
@@ -607,7 +611,6 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   (setq helm-move-to-line-cycle-in-source nil)
   ;; disable helm-descbind-mode to keep which-key working
   (remove-hook 'helm-mode-hook 'helm-descbinds-mode)
-  (helm-descbinds-mode -1)
 
 
   ;; tvm ffi-navigator https://github.com/tqchen/ffi-navigator
@@ -643,6 +646,7 @@ before packages are loaded."
     (dap-register-debug-template
      "Python :: Run pytest (Converter -- test_rmsnorm.py)"
      (list :type "python"
+           :cwd: "/local/mnt/workspace/boyuc/aisw-mainline/QAISW/FirstParty/ModelTools/Converters/test/python/"
            :args "/local/mnt/workspace/boyuc/aisw-mainline/QAISW/FirstParty/ModelTools/Converters/test/python/converters/converter_ir -k test_rmsnorm"
            :cwd nil
            :program nil
@@ -668,10 +672,24 @@ before packages are loaded."
                      :port "5678")
            :name "Python :: attach remote host"
            ))
+    (dap-register-debug-template
+     "cpptools::Run Qairt-Quantizer python"
+     (list :type "cppdbg"
+           :request "launch"
+           :name "cpptools::Run Configuration"
+           :MIMode "gdb"
+           :program "/usr/bin/python"
+           :args ( list
+                   "/local/mnt/workspace/boyuc/aisw-mainline/htp_debug_build/releases/QnnUnstripped/qaisw-v2.31.0.250110022225_102822_withsymbols/bin/x86_64-linux-clang/qairt-quantizer"
+                   "--input_dlc"
+                   "/local/mnt/workspace/boyuc/htp_trace/VGG/onnx/vgg16.dlc"
+                   "--input_list"
+                   "/local/mnt/workspace/boyuc/htp_trace/VGG/data/cropped/raw_list.txt"
+                   "--output_dlc"
+                   "/local/mnt/workspace/boyuc/htp_trace/vgg_quant.dlc"
+                   )
+           :cwd "/"))
     )
-
-
-
 
   (global-auto-highlight-symbol-mode)
   ;; use Shift + Arrow to switch window
