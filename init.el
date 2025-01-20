@@ -689,7 +689,33 @@ before packages are loaded."
                    "/local/mnt/workspace/boyuc/htp_trace/vgg_quant.dlc"
                    )
            :cwd "/"))
-    )
+
+
+    ;; see reference for cpptools at https://code.visualstudio.com/docs/cpp/launch-json-reference
+
+    (dap-register-debug-template
+     "cpptools::gdb Run QairtQuantizer"
+     (list :type "cppdbg"
+           :request "launch"
+           :name "cpptools::gdb Run QairtQuantizer"
+           :MIMode "gdb"
+           :program "/usr/bin/python3"
+           :args '("/local/mnt/workspace/boyuc/aisw-mainline/htp_debug_build/releases/QnnUnstripped/qaisw-v2.31.0.250110022225_102822_withsymbols/bin/x86_64-linux-clang/qairt-quantizer" "--input_dlc" "/local/mnt/workspace/boyuc/htp_trace/VGG/onnx/vgg16.dlc" "--input_list" "/local/mnt/workspace/boyuc/htp_trace/VGG/data/cropped/raw_list.txt" "--output_dlc" "/local/mnt/workspace/boyuc/htp_trace/vgg_quant.dlc")
+           :cwd "/local/mnt/workspace/boyuc/htp_trace/debug-sdk"))
+
+
+    (dap-register-debug-template
+     "cpptools::lldb Run QairtQuantizer"
+     (list :type "cppdbg"
+           :request "launch"
+           :name "cpptools::lldb Run QairtQuantizer"
+           :MIMode "lldb"
+           :miDebuggerPath: "/local/mnt/workspace/boyuc/aisw-tools/avante-tools/prebuilt/x86_64-linux-clang/clang-9.0.0/bin/lldb"
+           :program "/usr/bin/python3"
+                                        ;:stopAtEntry: t
+           :args ("/local/mnt/workspace/boyuc/aisw-mainline/htp_debug_build/releases/QnnUnstripped/qaisw-v2.31.0.250110022225_102822_withsymbols/bin/x86_64-linux-clang/qairt-quantizer" "--input_dlc" "/local/mnt/workspace/boyuc/htp_trace/VGG/onnx/vgg16.dlc" "--input_list" "/local/mnt/workspace/boyuc/htp_trace/VGG/data/cropped/raw_list.txt" "--output_dlc" "/local/mnt/workspace/boyuc/htp_trace/vgg_quant.dlc")
+           :cwd "/local/mnt/workspace/boyuc/htp_trace/debug-sdk"))
+    ) ;; end with-eval-after-load 'dap
 
   (global-auto-highlight-symbol-mode)
   ;; use Shift + Arrow to switch window
