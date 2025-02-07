@@ -34,7 +34,7 @@ This function should only modify configuration layer settings."
    dotspacemacs-configuration-layers
    '(shell-scripts
      yaml
-     dap-mode
+     dap
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -44,11 +44,11 @@ This function should only modify configuration layer settings."
      html
      emacs-lisp
      markdown
-     cmake
-     restructuretext
-     (python :variables python-backend 'lsp)
+     (cmake :variables
+            cmake-backend 'lsp)
+     (python :variables python-backend 'lsp python-lsp-server 'pyright)
      (c-c++ :variables
-            c-c++-backend 'lsp-clls,
+            c-c++-backend 'lsp-clls
             c-c++-lsp-enable-semantic-highlight 'rainbow
             c-c++-dap-adapters '(dap-lldb dap-cpptools)
             )
@@ -69,16 +69,13 @@ This function should only modify configuration layer settings."
           org-enable-roam-ui t)
      (shell :variables
             shell-default-height 30
-            shell-default-position 'bottom)
+            shell-default-position 'bottom
+            shell-default-term-shell "/usr/bin/fish")
      spell-checking
      syntax-checking
      version-control
      treemacs
 
-     ;; leetcode layer
-     ;; need to first download private package into location
-     ;;git clone https://github.com/anmoljagetia/leetcode-emacs-layer.git ~/.emacs.d/private/myleetcode
-     myleetcode
      )
 
 
@@ -672,27 +669,54 @@ before packages are loaded."
                      :port "5678")
            :name "Python :: attach remote host"
            ))
+
+
+
     (dap-register-debug-template
-     "cpptools::Run Qairt-Quantizer python"
-     (list :type "cppdbg"
+     "GDB::Run Qairt-Quantizer"
+     (list :type "gdb"
            :request "launch"
-           :name "cpptools::Run Configuration"
-           :MIMode "gdb"
-           :program "/usr/bin/python"
-           :args ( list
-                   "/local/mnt/workspace/boyuc/aisw-mainline/htp_debug_build/releases/QnnUnstripped/qaisw-v2.31.0.250110022225_102822_withsymbols/bin/x86_64-linux-clang/qairt-quantizer"
-                   "--input_dlc"
-                   "/local/mnt/workspace/boyuc/htp_trace/VGG/onnx/vgg16.dlc"
-                   "--input_list"
-                   "/local/mnt/workspace/boyuc/htp_trace/VGG/data/cropped/raw_list.txt"
-                   "--output_dlc"
-                   "/local/mnt/workspace/boyuc/htp_trace/vgg_quant.dlc"
-                   )
-           :cwd "/"))
+           :name "GDB::Run Qairt-Quantizer"
+           :target "/usr/bin/python"
+           :arguments (mapconcat 'identity '("/local/mnt/workspace/boyuc/aisw-mainline/htp_debug_build/releases/QnnUnstripped/qaisw-v2.31.0.250110022225_102822_withsymbols/bin/x86_64-linux-clang/qairt-quantizer" "--input_dlc" "/local/mnt/workspace/boyuc/htp_trace/VGG/onnx/vgg16.dlc" "--input_list" "/local/mnt/workspace/boyuc/htp_trace/VGG/data/cropped/raw_list.txt" "--output_dlc" "/local/mnt/workspace/boyuc/htp_trace/vgg_quant.dlc") " ")
+           :cwd "/local/mnt/workspace/boyuc/htp_trace/debug-sdk"))
+
+    (dap-register-debug-template
+     "GDB::Run ContextBinaryGenerator"
+     (list :type "gdb"
+           :request "launch"
+           :name "GDB::Run Qairt-Quantizer"
+           :target "/local/mnt/workspace/boyuc/aisw-mainline/htp_debug_build/releases/QnnUnstripped/qaisw-v2.31.0.250110022225_102822_withsymbols/bin/x86_64-linux-clang/qnn-context-binary-generator"
+           :arguments (mapconcat 'identity
+                            '(
+                              "--model"
+                              "/local/mnt/workspace/boyuc/aisw-mainline/htp_debug_build/releases/QnnUnstripped/qaisw-v2.31.0.250110022225_102822_withsymbols/lib/x86_64-linux-clang/libQnnModelDlc.so"
+                              "--dlc_path"
+                              "/local/mnt/workspace/boyuc/layout_transform_models/custom_ear_23_uc.v.1454.1.0_06412396_video_seg/after_model.dlc"
+                              "--backend"
+                              "/local/mnt/workspace/boyuc/layout_transform_models/custom_ear_23_uc.v.1454.1.0_06412396_video_seg/libQnnHtp.so"
+                              "--output_dir"
+                              "/local/mnt/workspace/boyuc/layout_transform_models/custom_ear_23_uc.v.1454.1.0_06412396_video_seg//after_model_serialized_binary"
+                              "--binary_file"
+                              "video_seg_prepared.bin"
+                              "--config_file"
+                              "/local/mnt/workspace/boyuc/layout_transform_models/custom_ear_23_uc.v.1454.1.0_06412396_video_seg//1175-0107-SCXT_LANAI_L86/htp_vtcm_8.0_RexRLw5l.json"
+                              )
+                            " "
+                            )
+           :cwd "/local/mnt/workspace/boyuc/htp_trace/debug-sdk"))
+
+    (dap-register-debug-template
+     "GDB::Run Gen APIREC"
+     (list :type "gdb"
+           :request "launch"
+           :name "GDB::Run Qairt-Quantizer"
+           :target "/local/mnt/workspace/boyuc/aisw-mainline/htp_debug_build/releases/QnnUnstripped/qaisw-v2.31.0.250110022225_102822_withsymbols/bin/x86_64-linux-clang/qnn-context-binary-generator"
+           :arguments "--model /prj/qct/bubbletea/boyuc/apirec-artifacts/qnn_222_modellib/x86_64-linux-clang/libattn.so --backend /local/mnt/workspace/boyuc/htp_trace/debug-sdk/lib/x86_64-linux-clang/libQnnHtp.so"
+           :cwd "/prj/qct/bubbletea/boyuc/apirec-artifacts/qnn_222_modellib/"))
 
 
     ;; see reference for cpptools at https://code.visualstudio.com/docs/cpp/launch-json-reference
-
     (dap-register-debug-template
      "cpptools::gdb Run QairtQuantizer"
      (list :type "cppdbg"
@@ -703,6 +727,28 @@ before packages are loaded."
            :args '("/local/mnt/workspace/boyuc/aisw-mainline/htp_debug_build/releases/QnnUnstripped/qaisw-v2.31.0.250110022225_102822_withsymbols/bin/x86_64-linux-clang/qairt-quantizer" "--input_dlc" "/local/mnt/workspace/boyuc/htp_trace/VGG/onnx/vgg16.dlc" "--input_list" "/local/mnt/workspace/boyuc/htp_trace/VGG/data/cropped/raw_list.txt" "--output_dlc" "/local/mnt/workspace/boyuc/htp_trace/vgg_quant.dlc")
            :cwd "/local/mnt/workspace/boyuc/htp_trace/debug-sdk"))
 
+    (dap-register-debug-template
+     "cpptools::gdb Run ContextBinaryGenerator"
+     (list :type "cppdbg"
+           :request "launch"
+           :name "cpptools::gdb Run QairtQuantizer"
+           :MIMode "gdb"
+           :program "/local/mnt/workspace/boyuc/aisw-mainline/htp_debug_build/releases/QnnUnstripped/qaisw-v2.31.0.250110022225_102822_withsymbols/bin/x86_64-linux-clang/qnn-context-binary-generator"
+           :args '(
+                   "--model"
+                   "/local/mnt/workspace/boyuc/aisw-mainline/htp_debug_build/releases/QnnUnstripped/qaisw-v2.31.0.250110022225_102822_withsymbols/lib/x86_64-linux-clang/libQnnModelDlc.so"
+                   "--dlc_path"
+                   "/local/mnt/workspace/boyuc/layout_transform_models/custom_ear_23_uc.v.1454.1.0_06412396_video_seg/after_model.dlc"
+                   "--backend"
+                   "./libQnnHtp.so"
+                   "--output_dir"
+                   "/local/mnt/workspace/boyuc/layout_transform_models/custom_ear_23_uc.v.1454.1.0_06412396_video_seg//after_model_serialized_binary"
+                   "--binary_file"
+                   "video_seg_prepared.bin"
+                   "--config_file"
+                   "/local/mnt/workspace/boyuc/layout_transform_models/custom_ear_23_uc.v.1454.1.0_06412396_video_seg//1175-0107-SCXT_LANAI_L86/htp_vtcm_8.0_RexRLw5l.json"
+                   )
+           :cwd "/local/mnt/workspace/boyuc/htp_trace/debug-sdk"))
 
     (dap-register-debug-template
      "cpptools::lldb Run QairtQuantizer"
@@ -880,15 +926,16 @@ This function is called at the very end of Spacemacs initialization."
                         rust-mode rustic sass-mode scss-mode shell-pop
                         simple-httpd slim-mode smeargle space-doc spaceline
                         spacemacs-purpose-popwin spacemacs-whitespace-cleanup
-                        sphinx-doc string-edit-at-point string-inflection
-                        symbol-overlay symon tablist tagedit term-cursor
-                        terminal-here toc-org toml-mode transient treemacs-evil
-                        treemacs-icons-dired treemacs-magit treemacs-persp
-                        treemacs-projectile treepy undo-tree uuidgen
-                        vi-tilde-fringe vim-powerline volatile-highlights vterm
-                        web-beautify web-completion-data web-mode websocket
-                        winum with-editor writeroom-mode ws-butler xterm-color
-                        yaml yaml-mode yapfify yasnippet yasnippet-snippets ycmd)))
+                        sphinx-doc sqlite3 string-edit-at-point
+                        string-inflection symbol-overlay symon tablist tagedit
+                        term-cursor terminal-here toc-org toml-mode transient
+                        treemacs-evil treemacs-icons-dired treemacs-magit
+                        treemacs-persp treemacs-projectile treepy undo-tree
+                        uuidgen vi-tilde-fringe vim-powerline
+                        volatile-highlights vterm web-beautify
+                        web-completion-data web-mode websocket winum with-editor
+                        writeroom-mode ws-butler xterm-color yaml yaml-mode
+                        yapfify yasnippet yasnippet-snippets ycmd)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
