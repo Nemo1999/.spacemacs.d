@@ -632,6 +632,8 @@ dump."
 
 
 (defun dotspacemacs/user-config ()
+  ;; enable pixel-scroll mode
+  (pixel-scroll-precision-mode)
   "Configuration for user code:
 This function is called at the very end of Spacemacs startup, after layer
 configuration.
