@@ -676,17 +676,30 @@ before packages are loaded."
   ;; LLM integration
   (require 'gptel)
 
+  ;; use gemma3 in ollama https://ollama.com/library/gemma3
+  ;; OPTIONAL configuration
+  (setq
+   gptel-model 'gemma3:1b-it-qat
+   gptel-backend (gptel-make-ollama "Ollama"
+                   :host "localhost:11434"
+                   :stream t
+                   :models '(gemma3:1b-it-qat)))
+
+
+
   ;; ChatGPT
   ;;(setq gptel-api-key "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")
   ;; Gemini
   ;; :key can be a function that returns the API key.
-  (setq-default
-   gptel-model "gemini-pro"
-   gptel-backend (gptel-make-gemini "Gemini"
-                                        ;:key "AIzaSyC1X3UB2dbglLryOhY24j4G_tG22lMXI9Q"
-                   :key "AIzaSyCnGEAQTJmY8T01kJijJfFAihJMj2elAGo"
-                   :stream t)
-   )
+  ;; (setq-default
+  ;;  gptel-model "gemini-pro"
+  ;;  gptel-backend (gptel-make-gemini "Gemini"
+  ;;                  ;; :key "AIzaSyC1X3UB2dbglLryOhY24j4G_tG22lMXI9Q"
+  ;;                  ;; :key "AIzaSyCnGEAQTJmY8T01kJijJfFAihJMj2elAGo"
+  ;;                  ;; :key "AIzaSyCQMPFleC405j7uc26cKlYCJ2Vfun_XHyI"
+  ;;                  :key "AIzaSyA5I29eEdQwdxg87LGvjOtJHcWOBrQNJis"
+  ;;                  :stream t)
+  ;;  )
 
   (define-key evil-normal-state-map (kbd "C-c C-g") #'gptel-menu)
   (define-key evil-insert-state-map (kbd "C-c C-g") #'gptel-menu)
